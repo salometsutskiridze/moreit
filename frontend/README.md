@@ -1,12 +1,21 @@
-# React + Vite
-**TO RUN FIRST TYPE: NPM INSTALL to intsall node_modules folder and package-lock.json file**
-**THEN TYPE: NPM RUN DEV to host and access it from browser with localhost**
----
-
-## FIRST RUN THIS COMMAND TO INSTALL LATEST NPM AND NODE
+# FIRST STEP : run this command to install npm and node
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/mklement0/n-install/stable/bin/n-install | bash -s 26
 
+```
+---
+
+# SECOND STEP : go to frontend folder and type this command
+
+```bash
+npm install
+```
+---
+
+# FINAL STEP : run this command to acces website in browser
+
+```bash
+npm run dev
 ```
 
