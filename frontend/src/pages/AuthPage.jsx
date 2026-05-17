@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 function validate(fields) {
@@ -12,9 +12,10 @@ function validate(fields) {
 }
 
 export default function AuthPage({ onLogin }) {
-  const [tab, setTab]     = useState("login");
-  const [form, setForm]   = useState({ name: "", email: "", password: "" });
+  const [tab, setTab]       = useState("login");
+  const [form, setForm]     = useState({ name: "", email: "", password: "" });
   const [errors, setErrors] = useState({});
+  const [showPass, setShowPass] = useState(false);
   const navigate = useNavigate();
 
   const set = (k, v) => { setForm(f => ({ ...f, [k]: v })); setErrors(e => ({ ...e, [k]: "" })); };
@@ -26,6 +27,10 @@ export default function AuthPage({ onLogin }) {
     onLogin({ email: form.email, name: form.name || form.email.split("@")[0] });
     navigate("/courses");
   }
+
+  useEffect(() => {
+    document.title = "MoreIT | Authorization Page";
+  }, []);
 
   return (
     <div className="page center">
@@ -42,7 +47,7 @@ export default function AuthPage({ onLogin }) {
 
         {tab === "register" && (
           <>
-            <label>NAME</label>
+            <label>სახელი</label>
             <input value={form.name} placeholder="eliot" onChange={e => set("name", e.target.value)} className={errors.name ? "invalid" : ""} />
             {errors.name && <span className="err">{errors.name}</span>}
           </>
@@ -52,9 +57,20 @@ export default function AuthPage({ onLogin }) {
         <input type="email" value={form.email} placeholder="you@mail.com" onChange={e => set("email", e.target.value)} className={errors.email ? "invalid" : ""} />
         {errors.email && <span className="err">{errors.email}</span>}
 
-        <label>PASSWORD</label>
-        <input type="password" value={form.password} placeholder="••••••••" onChange={e => set("password", e.target.value)} className={errors.password ? "invalid" : ""} />
+        <label>პაროლი</label>
+        <input
+          type={showPass ? "text" : "password"}
+          value={form.password}
+          placeholder="••••••••"
+          onChange={e => set("password", e.target.value)}
+          className={errors.password ? "invalid" : ""}
+        />
         {errors.password && <span className="err">{errors.password}</span>}
+
+        <label className="show-pass-label" onClick={() => setShowPass(p => !p)}>
+        <div className={`box ${showPass ? "checked" : ""}`} />
+        SHOW PASSWORD
+        </label>
 
         <button className="btn" onClick={submit}>
           &#9654; {tab === "login" ? "ENTER" : "CREATE ACCOUNT"}
@@ -62,8 +78,8 @@ export default function AuthPage({ onLogin }) {
 
         <p className="switch">
           {tab === "login"
-            ? <>DON'T HAVE ACCOUNT? <a onClick={() => setTab("register")}>REGISTER</a></>
-            : <>ALREADY HAVE ACCOUNT? <a onClick={() => setTab("login")}>LOGIN</a></>
+            ? <>არ გაქვს ანგარიში? <a onClick={() => setTab("register")}>REGISTER</a></>
+            : <>უკვე გაქვს ანგარიში? <a onClick={() => setTab("login")}>LOGIN</a></>
           }
         </p>
       </div>

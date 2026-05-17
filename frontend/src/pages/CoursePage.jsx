@@ -1,4 +1,5 @@
 import { useParams, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const courseData = {
   devops:        { label: "DevOps",        dot: "#00d2be" },
@@ -12,6 +13,10 @@ export default function CoursePage() {
   const { id } = useParams();
   const navigate = useNavigate();
   const course = courseData[id];
+
+  useEffect(() => {
+    document.title = course ? `MoreIT | ${course.label}` : "MoreIT | 404";
+  }, [id]);
 
   if (!course) return (
     <div className="page">

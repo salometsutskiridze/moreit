@@ -1,15 +1,20 @@
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const courses = [
-  { id: "devops",        label: "DevOps",       dot: "#00d2be", desc: "CI/CD · Docker · Linux · K8s" },
-  { id: "frontend",      label: "Frontend",     dot: "#5b5bff", desc: "HTML · CSS · JavaScript · React" },
-  { id: "backend",       label: "Backend",      dot: "#f59e0b", desc: "APIs · Databases · C# · Node.js" },
-  { id: "cybersecurity", label: "CyberSecurity",dot: "#ff4444", desc: "Networks · Ethical Hacking · CTF" },
-  { id: "qa",            label: "QA Engineer",  dot: "#22d3a5", desc: "Testing · Automation · Selenium" },
+  { id: "devops",        label: "DevOps",        dot: "#00d2be", desc: "CI/CD · Docker · Linux · K8s" },
+  { id: "frontend",      label: "Frontend",      dot: "#5b5bff", desc: "HTML · CSS · JavaScript · React" },
+  { id: "backend",       label: "Backend",       dot: "#f59e0b", desc: "APIs · Databases · C# · Node.js" },
+  { id: "cybersecurity", label: "CyberSecurity", dot: "#ff4444", desc: "Networks · Ethical Hacking · CTF" },
+  { id: "qa",            label: "QA Engineer",   dot: "#22d3a5", desc: "Testing · Automation · Selenium" },
 ];
 
 export default function CoursesPage() {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    document.title = "MoreIT | Courses";
+  }, []);
 
   return (
     <div className="page">
