@@ -1,5 +1,30 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { authApi } from "../services/api";
+
+
+async function submit() {
+  const fields = tab === "login"
+    ? { email: form.email, password: form.password }
+    : form;
+
+  const e = validate(fields);
+  if (Object.keys(e).length) { setErrors(e); return; }
+
+  if (tab === "login") {
+    const data = await authApi.login(form.email, form.password);
+    if (data.token) {
+      onLogin({ email: form.email, name: form.name });
+      navigate("/courses");
+    }
+  } else {
+    const data = await authApi.register(form.name, form.email, form.password);
+    if (data.message === "registered") {
+      onLogin({ email: form.email, name: form.name });
+      navigate("/courses");
+    }
+  }
+}
 
 function validate(fields) {
   const e = {};
@@ -33,6 +58,7 @@ export default function AuthPage({ onLogin }) {
   }, []);
 
   return (
+    
     <div className="page center">
       <div className="card">
         <div className="logo">
@@ -84,5 +110,6 @@ export default function AuthPage({ onLogin }) {
         </p>
       </div>
     </div>
+    
   );
 }

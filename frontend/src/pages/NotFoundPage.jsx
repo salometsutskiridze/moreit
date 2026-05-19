@@ -9,6 +9,7 @@ export default function NotFoundPage() {
 }, []);
 
   return (
+    
     <div className="page center">
       <h1 className="page-title">[ 404 ]</h1>
       <p className="page-sub">გვერდი ვერ მოიძებნა</p>
@@ -16,5 +17,6 @@ export default function NotFoundPage() {
         &#9664; HOME
       </button>
     </div>
+    
   );
 }

@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
+
 const courses = [
   { id: "devops",        label: "DevOps",        dot: "#00d2be", desc: "CI/CD · Docker · Linux · K8s" },
   { id: "frontend",      label: "Frontend",      dot: "#5b5bff", desc: "HTML · CSS · JavaScript · React" },
@@ -17,6 +18,7 @@ export default function CoursesPage() {
   }, []);
 
   return (
+    
     <div className="page">
       <h1 className="page-title">[ COURSES ]</h1>
       <p className="page-sub">აირჩიე შენი IT გზა</p>
@@ -32,5 +34,6 @@ export default function CoursesPage() {
         ))}
       </div>
     </div>
+    
   );
 }

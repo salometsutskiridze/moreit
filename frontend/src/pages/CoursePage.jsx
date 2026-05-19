@@ -29,6 +29,7 @@ export default function CoursePage() {
   );
 
   return (
+    
     <div className="page">
       <button className="back-btn" onClick={() => navigate("/courses")}>&#9664; BACK</button>
 
@@ -54,5 +55,6 @@ export default function CoursePage() {
         </div>
       </div>
     </div>
+    
   );
 }

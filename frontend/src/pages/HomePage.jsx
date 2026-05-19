@@ -7,9 +7,11 @@ export default function HomePage() {
 }, []);
 
   return (
+   
     <div className="page center">
       <h1 className="page-title">[ MoreIT ]</h1>
       <p className="page-sub">IT კარიერის პლატფორმა ყველასთვის</p>
     </div>
+    
   );
 }
