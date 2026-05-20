@@ -185,7 +185,7 @@ body {
   box-shadow: 8px 8px 0 #000;
   padding: 52px 42px;
   width: 100%;
-  max-width: 440px;
+  max-width: 480px;
 }
 
 
@@ -444,3 +444,25 @@ input:focus   { border-color: var(--accent); }
     padding: 28px 20px;
   }
 }
+
+.navbar {
+  height: 80px;
+}
+
+.nav-logo {
+  width:96px;
+  height: 96px;
+  object-fit: contain;
+  vertical-align: middle;
+  margin-right: 10px;
+}
+
+.auth-logo {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto 10px;
+  margin-top: -30px;
+}
+

@@ -8,8 +8,11 @@ export default function Navbar({ user, onLogout }) {
 
   return (
     <nav className="navbar">
-      <Link to="/" className="nav-brand">MoreIT</Link>
-
+      {/* <Link to="/" className="nav-brand">MoreIT</Link> */}
+      <Link to="/" className="nav-brand">
+      <img src="/logo.png" alt="MoreIT" className="nav-logo" />
+        MoreIT
+      </Link>
       <div className="nav-links">
         <Link to="/"        className={active("/")}
           onMouseDown={e => e.currentTarget.style.transform = "scale(0.85)"}
