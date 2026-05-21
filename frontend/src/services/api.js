@@ -18,4 +18,22 @@ export const authApi = {
     });
     return res.json();
   },
+
+  verify: async (email, code) => {
+    const res = await fetch(`${BASE}/auth/verify`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, code }),
+    });
+    return res.json();
+  },
+
+  contact: async (name, email, message) => {
+    const res = await fetch(`${BASE}/contact`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, email, message }),
+    });
+    return res.json();
+  },
 };
