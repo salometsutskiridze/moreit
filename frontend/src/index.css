@@ -406,43 +406,63 @@ input:focus   { border-color: var(--accent); }
   box-shadow: none;
 }
 
+.page {
+  padding-top: 80px;
+}
 
 @media (max-width: 768px) {
+  /* cursor მობილზე გამოთიშე */
+  .cursor { display: none; }
+  * { cursor: auto !important; }
+
   .navbar {
-    flex-wrap: wrap;
-    gap: 12px;
+    flex-direction: column;
+    height: auto;
     padding: 12px 16px;
+    gap: 10px;
   }
 
   .nav-links {
-    gap: 16px;
+    gap: 20px;
     flex-wrap: wrap;
     justify-content: center;
     width: 100%;
+    order: 2;
+    margin-top: 2px;
   }
-
-  .nav-link { font-size: 8px; }
-  .nav-brand { font-size: 13px; }
 
   .nav-auth {
     width: 100%;
     justify-content: center;
+    order: 3;
+
   }
 
-  .courses-grid {
-    grid-template-columns: 1fr;
+  .nav-brand { order: 1; }
+  .nav-logo { 
+    width: 28px; 
+    height: 28px; 
+    margin-top: -18px;
   }
-
-  .page {
-    padding: 24px 16px;
+  .nav-link { font-size: 7px; }
+  .nav-brand { font-size: 18px;
+    margin-top: -6px;
+    margin-right: 40px;
   }
+  .btn.small { font-size: 8px; padding: 8px 10px; }
 
+  .courses-grid { grid-template-columns: 1fr; }
+
+  .page { padding: 24px 16px;
+    padding-top: 100px;
+  }
   .page-title { font-size: 16px; }
-  .page-sub   { font-size: 8px; }
+  .page-sub { font-size: 8px; }
+  
 
-  .card {
-    padding: 28px 20px;
-  }
+  .card { padding: 28px 16px; }
+  .logo-box { font-size: 14px; }
+  .auth-logo { width: 36px; height: 36px; }
 }
 
 .navbar {
