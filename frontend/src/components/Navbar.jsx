@@ -8,13 +8,13 @@ export default function Navbar({ user, onLogout }) {
 
   return (
     <nav className="navbar">
-      {/* <Link to="/" className="nav-brand">MoreIT</Link> */}
       <Link to="/" className="nav-brand">
-      <img src="/logo.png" alt="MoreIT" className="nav-logo" />
+        <img src="/logo.png" alt="MoreIT" className="nav-logo" />
         MoreIT
       </Link>
+
       <div className="nav-links">
-        <Link to="/"        className={active("/")}
+        <Link to="/" className={active("/")}
           onMouseDown={e => e.currentTarget.style.transform = "scale(0.85)"}
           onMouseUp={e => e.currentTarget.style.transform = "scale(1)"}
           onMouseLeave={e => e.currentTarget.style.transform = "scale(1)"}>HOME</Link>
@@ -22,6 +22,10 @@ export default function Navbar({ user, onLogout }) {
           onMouseDown={e => e.currentTarget.style.transform = "scale(0.85)"}
           onMouseUp={e => e.currentTarget.style.transform = "scale(1)"}
           onMouseLeave={e => e.currentTarget.style.transform = "scale(1)"}>COURSES</Link>
+        <Link to="/books" className={active("/books")}
+          onMouseDown={e => e.currentTarget.style.transform = "scale(0.85)"}
+          onMouseUp={e => e.currentTarget.style.transform = "scale(1)"}
+          onMouseLeave={e => e.currentTarget.style.transform = "scale(1)"}>BOOKS</Link>
         <Link to="/contact" className={active("/contact")}
           onMouseDown={e => e.currentTarget.style.transform = "scale(0.85)"}
           onMouseUp={e => e.currentTarget.style.transform = "scale(1)"}

@@ -11,11 +11,12 @@ function validate(fields) {
   return e;
 }
 
-export default function AuthPage({ onLogin, toast, clearToast }) {
+export default function AuthPage({ onLogin, showToast }) {
   const [tab, setTab]           = useState("login");
   const [form, setForm]         = useState({ name: "", email: "", password: "" });
   const [errors, setErrors]     = useState({});
   const [showPass, setShowPass] = useState(false);
+  const [remember, setRemember] = useState(false);
   const [step, setStep]         = useState("form");
   const [code, setCode]         = useState("");
   const [codeErr, setCodeErr]   = useState("");
@@ -33,8 +34,11 @@ export default function AuthPage({ onLogin, toast, clearToast }) {
     if (Object.keys(e).length) { setErrors(e); return; }
 
     if (tab === "login") {
+      const userData = { email: form.email, name: form.email.split("@")[0] };
       localStorage.setItem("moreit_joindate", new Date().toLocaleDateString("ka-GE"));
-      onLogin({ email: form.email, name: form.email.split("@")[0] });
+      if (remember) localStorage.setItem("moreit_user", JSON.stringify(userData));
+      onLogin(userData);
+      showToast("წარმატებით გაიარეთ აუტორიზაცია ✓");
       navigate("/courses");
     } else {
       setStep("verify");
@@ -43,19 +47,16 @@ export default function AuthPage({ onLogin, toast, clearToast }) {
 
   function verifyCode() {
     if (code.length !== 6) { setCodeErr("> 6-DIGIT CODE IS REQUIRED"); return; }
+    const userData = { email: form.email, name: form.name };
     localStorage.setItem("moreit_joindate", new Date().toLocaleDateString("ka-GE"));
-    onLogin({ email: form.email, name: form.name });
+    if (remember) localStorage.setItem("moreit_user", JSON.stringify(userData));
+    onLogin(userData);
+    showToast("წარმატებით დარეგისტრირდი ✓");
     navigate("/courses");
   }
 
   return (
     <div className="page center">
-      {toast && (
-        <div className="toast">
-          &#9632; {toast}
-        </div>
-      )}
-
       <div className="card">
         <div className="logo">
           <div className="logo-row">
@@ -135,6 +136,11 @@ export default function AuthPage({ onLogin, toast, clearToast }) {
             <label className="show-pass-label" onClick={() => setShowPass(p => !p)}>
               <div className={`box ${showPass ? "checked" : ""}`} />
               SHOW PASSWORD
+            </label>
+
+            <label className="show-pass-label" onClick={() => setRemember(p => !p)}>
+              <div className={`box ${remember ? "checked" : ""}`} />
+              REMEMBER ME
             </label>
 
             <button className="btn" onClick={submit}>
