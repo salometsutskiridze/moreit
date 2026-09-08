@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from "react";
 
 import Navbar         from "./components/Navbar";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Toast          from "./components/Toast";
 import AuthPage       from "./pages/AuthPage";
 import HomePage       from "./pages/HomePage";
 import CoursesPage    from "./pages/CoursesPage";
@@ -14,17 +15,19 @@ import NotFoundPage   from "./pages/NotFoundPage";
 import "./index.css";
 
 export default function App() {
-  const [user, setUser] = useState(null);
+  const [user, setUser]   = useState(null);
+  const [toast, setToast] = useState(null);
   const cursor = useRef();
 
+  const showToast = (msg) => setToast(msg);
+
   useEffect(() => {
-    const move  = (e) => {
+    const move = (e) => {
       cursor.current.style.left = e.clientX - 6 + "px";
       cursor.current.style.top  = e.clientY - 6 + "px";
     };
     const down = () => cursor.current.classList.add("clicked");
     const up   = () => cursor.current.classList.remove("clicked");
-
     window.addEventListener("mousemove", move);
     window.addEventListener("mousedown", down);
     window.addEventListener("mouseup",   up);
@@ -42,22 +45,23 @@ export default function App() {
         <Navbar user={user} onLogout={() => setUser(null)} />
         <Routes>
           <Route path="/"            element={<HomePage />} />
-          <Route path="/login"       element={<AuthPage onLogin={setUser} />} />
-          <Route path="/courses"     element={<CoursesPage />} />
+          <Route path="/login"       element={<AuthPage onLogin={setUser} toast={toast} clearToast={() => setToast(null)} />} />
+          <Route path="/courses"     element={<CoursesPage user={user} showToast={showToast} />} />
           <Route path="/contact"     element={<ContactPage />} />
           <Route path="/courses/:id" element={
-            <ProtectedRoute user={user}>
+            <ProtectedRoute user={user} showToast={showToast} msg="კურსის სანახავად გაიარეთ აუტორიზაცია">
               <CoursePage />
             </ProtectedRoute>
           } />
           <Route path="/profile"     element={
-            <ProtectedRoute user={user}>
+            <ProtectedRoute user={user} showToast={showToast} msg="პროფილის სანახავად გაიარეთ აუტორიზაცია">
               <ProfilePage user={user} />
             </ProtectedRoute>
           } />
           <Route path="*"            element={<NotFoundPage />} />
         </Routes>
       </BrowserRouter>
+      {toast && <Toast message={toast} onClose={() => setToast(null)} />}
     </>
   );
 }

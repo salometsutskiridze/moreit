@@ -11,14 +11,14 @@ function validate(fields) {
   return e;
 }
 
-export default function AuthPage({ onLogin }) {
-  const [tab, setTab]         = useState("login");
-  const [form, setForm]       = useState({ name: "", email: "", password: "" });
-  const [errors, setErrors]   = useState({});
+export default function AuthPage({ onLogin, toast, clearToast }) {
+  const [tab, setTab]           = useState("login");
+  const [form, setForm]         = useState({ name: "", email: "", password: "" });
+  const [errors, setErrors]     = useState({});
   const [showPass, setShowPass] = useState(false);
-  const [step, setStep]       = useState("form"); // "form" | "verify"
-  const [code, setCode]       = useState("");
-  const [codeErr, setCodeErr] = useState("");
+  const [step, setStep]         = useState("form");
+  const [code, setCode]         = useState("");
+  const [codeErr, setCodeErr]   = useState("");
   const navigate = useNavigate();
 
   const set = (k, v) => { setForm(f => ({ ...f, [k]: v })); setErrors(e => ({ ...e, [k]: "" })); };
@@ -33,26 +33,30 @@ export default function AuthPage({ onLogin }) {
     if (Object.keys(e).length) { setErrors(e); return; }
 
     if (tab === "login") {
+      localStorage.setItem("moreit_joindate", new Date().toLocaleDateString("ka-GE"));
       onLogin({ email: form.email, name: form.email.split("@")[0] });
       navigate("/courses");
     } else {
-      // backend მზად რომ იყოს: await authApi.register(...)
       setStep("verify");
     }
   }
 
   function verifyCode() {
     if (code.length !== 6) { setCodeErr("> 6-DIGIT CODE IS REQUIRED"); return; }
-    // backend მზად რომ იყოს: await authApi.verify(form.email, code)
-    // ახლა mock: ნებისმიერი 6 ნიშნა კოდი გაივლის
+    localStorage.setItem("moreit_joindate", new Date().toLocaleDateString("ka-GE"));
     onLogin({ email: form.email, name: form.name });
     navigate("/courses");
   }
 
   return (
     <div className="page center">
-      <div className="card">
+      {toast && (
+        <div className="toast">
+          &#9632; {toast}
+        </div>
+      )}
 
+      <div className="card">
         <div className="logo">
           <div className="logo-row">
             <img src="/logo.png" alt="MoreIT" className="auth-logo" />

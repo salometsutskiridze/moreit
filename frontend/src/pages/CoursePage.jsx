@@ -4,9 +4,7 @@ import { useEffect } from "react";
 const courseData = {
   devops:        { label: "DevOps",        dot: "#00d2be" },
   frontend:      { label: "Frontend",      dot: "#5b5bff" },
-  backend:       { label: "Backend",       dot: "#f59e0b" },
-  cybersecurity: { label: "CyberSecurity", dot: "#ff4444" },
-  qa:            { label: "QA Engineer",   dot: "#22d3a5" },
+  backend:       { label: "Backend",       dot: "#f59e0b" }
 };
 
 export default function CoursePage() {
@@ -40,17 +38,7 @@ export default function CoursePage() {
 
       <div className="course-sections">
         <div className="section-box">
-          <div className="section-title">&#9632; TSU COURSES</div>
-          <div className="section-empty">// კონტენტი მალე დაემატება</div>
-        </div>
-
-        <div className="section-box">
           <div className="section-title">&#9632; MATERIALS</div>
-          <div className="section-empty">// კონტენტი მალე დაემატება</div>
-        </div>
-
-        <div className="section-box">
-          <div className="section-title">&#9632; REVIEWS</div>
           <div className="section-empty">// კონტენტი მალე დაემატება</div>
         </div>
       </div>
