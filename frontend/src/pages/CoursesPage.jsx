@@ -2,9 +2,9 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
 const courses = [
-  { id: "devops",        label: "DevOps",        dot: "#00d2be", desc: "CI/CD · Docker · Linux · K8s" },
   { id: "frontend",      label: "Frontend",      dot: "#5b5bff", desc: "HTML · CSS · JavaScript · React" },
-  { id: "backend",       label: "Backend",       dot: "#f59e0b", desc: "APIs · Databases · C# · Node.js" }
+  { id: "backend",       label: "Backend",       dot: "#f59e0b", desc: "APIs · Databases · C# · Node.js" },
+  { id: "devops",        label: "DevOps",        dot: "#00d2be", desc: "CI/CD · Docker · Linux · K8s" }
 ];
 
 export default function CoursesPage({ user, showToast }) {
