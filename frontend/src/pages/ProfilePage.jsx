@@ -21,6 +21,11 @@ export default function ProfilePage({ user }) {
     reader.readAsDataURL(file);
   }
 
+  function resetAvatar() {
+    setAvatar(null);
+    localStorage.removeItem(`moreit_avatar_${user?.email}`);
+  }
+
   const joinDate = localStorage.getItem("moreit_joindate") || new Date().toLocaleDateString("ka-GE");
 
   return (
@@ -32,13 +37,22 @@ export default function ProfilePage({ user }) {
 
         {/* ── Avatar ── */}
         <div className="profile-avatar-wrap">
-          <div className="profile-avatar" onClick={() => fileRef.current.click()}>
+          <div className="profile-avatar">
             {avatar
               ? <img src={avatar} alt="avatar" className="avatar-img" />
               : <img src="/default-avatar.png" alt="avatar" className="avatar-img" />
             }
-            <div className="avatar-overlay">&#9654; CHANGE</div>
           </div>
+
+          <div className="avatar-btns">
+            <button className="avatar-btn" onClick={() => fileRef.current.click()}>
+               CHANGE AVATAR
+            </button>
+            <button className="avatar-btn reset" onClick={resetAvatar}>
+               RESET
+            </button>
+          </div>
+
           <input
             type="file"
             accept="image/*"
@@ -64,7 +78,7 @@ export default function ProfilePage({ user }) {
           </div>
           <div className="profile-row">
             <span className="profile-key">&#9632; STATUS</span>
-            <span className="profile-val" style={{ color: "#22d3a5" }}>ACTIVE ●</span>
+            <span className="profile-val" style={{ color: "#22d3a5" }}>ACTIVE •</span>
           </div>
         </div>
 
