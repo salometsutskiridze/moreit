@@ -52,44 +52,33 @@ public class AuthController : ControllerBase
     [HttpPost("verify-otp")]
     public async Task<IActionResult> VerifyOtp(VerifyOtpDto dto)
     {
-        var user = await _db.Users
-            .FirstOrDefaultAsync(u => u.Email == dto.Email);
-        if (user == null)
-            return NotFound(new { error = "User not found" });
-
-        if (user.OtpCode != dto.Otp)
-            return BadRequest(new { error = "Wrong OTP" });
+        var user = await _db.Users.FirstOrDefaultAsync(u => u.Email == dto.Email);
+        if (user == null) return NotFound(new { error = "User not found" });
+        if (user.OtpCode != dto.Otp) return BadRequest(new { error = "Wrong OTP" });
 
         user.IsVerified = true;
         user.OtpCode = null;
         await _db.SaveChangesAsync();
 
-        var token = GenerateJwt(user);
-        return Ok(new AuthResponseDto(token, user.Name));
+        return Ok(new AuthResponseDto(GenerateJwt(user), user.Name));
     }
 
     [HttpPost("login")]
     public async Task<IActionResult> Login(LoginDto dto)
     {
-        var user = await _db.Users
-            .FirstOrDefaultAsync(u => u.Email == dto.Email);
-        if (user == null)
-            return NotFound(new { error = "User not found" });
-
+        var user = await _db.Users.FirstOrDefaultAsync(u => u.Email == dto.Email);
+        if (user == null) return NotFound(new { error = "User not found" });
         if (!BCrypt.Net.BCrypt.Verify(dto.Password, user.PasswordHash))
             return Unauthorized(new { error = "Wrong password" });
-
         if (!user.IsVerified)
             return StatusCode(403, new { error = "Please verify your email first" });
 
-        var token = GenerateJwt(user);
-        return Ok(new AuthResponseDto(token, user.Name));
+        return Ok(new AuthResponseDto(GenerateJwt(user), user.Name));
     }
 
     private string GenerateJwt(User user)
     {
-        var key = new SymmetricSecurityKey(
-            Encoding.UTF8.GetBytes(_config["Jwt:Key"]!));
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]!));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
         var token = new JwtSecurityToken(
             issuer: _config["Jwt:Issuer"],
@@ -97,7 +86,6 @@ public class AuthController : ControllerBase
             claims: new[] { new Claim("id", user.Id.ToString()) },
             expires: DateTime.UtcNow.AddDays(7),
             signingCredentials: creds);
-
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
 }

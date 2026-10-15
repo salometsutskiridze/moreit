@@ -1,5 +1,5 @@
-using MailKit.Net.Smtp;
-using MimeKit;
+using SendGrid;
+using SendGrid.Helpers.Mail;
 
 namespace MoreIT.API.Services;
 
@@ -19,22 +19,16 @@ public class EmailService
 
     public async Task SendOtpAsync(string toEmail, string otp)
     {
-        var message = new MimeMessage();
-        message.From.Add(MailboxAddress.Parse(_config["Email:From"]));
-        message.To.Add(MailboxAddress.Parse(toEmail));
-        message.Subject = "MoreIT - Email Verification";
-        message.Body = new TextPart("plain")
-        {
-            Text = $"MoreIT - შენი კოდია: {otp}\n\nკოდი 10 წუთში იწურება."
-        };
-
-        using var client = new SmtpClient();
-        await client.ConnectAsync("smtp.gmail.com", 587, false);
-        await client.AuthenticateAsync(
-            _config["Email:From"],
-            _config["Email:Password"]
+        var apiKey = _config["SendGrid:ApiKey"];
+        var client = new SendGridClient(apiKey);
+        var from = new EmailAddress("tsutskridzesalome39@gmail.com", "MoreIT");
+        var to = new EmailAddress(toEmail);
+        var msg = MailHelper.CreateSingleEmail(
+            from, to,
+            "MoreIT - Email Verification",
+            $"შენი კოდია: {otp}. კოდი 10 წუთში იწურება.",
+            $"<h2>MoreIT</h2><p>შენი კოდია: <strong>{otp}</strong></p><p>კოდი 10 წუთში იწურება.</p>"
         );
-        await client.SendAsync(message);
-        await client.DisconnectAsync(true);
+        await client.SendEmailAsync(msg);
     }
 }
